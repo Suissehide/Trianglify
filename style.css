@@ -316,7 +316,7 @@ input[type="range"]::-moz-focus-outer {
     align-items: center;
     margin-top: 25px;
     margin-bottom: 30px;
-    max-width: calc(100% - 94px);
+    max-width: calc(100% - 150px);
 }
 
 .palette-picker-list {
@@ -362,8 +362,8 @@ input[type="range"]::-moz-focus-outer {
 }
 
 input[type="color"] {
-	opacity: 0;
-	display: block;
+    opacity: 0;
+    display: block;
     border: none;
     padding: 0;
 }
@@ -584,7 +584,7 @@ input[type="color"]:focus {
 .modal-content {
     position: relative;
     background-color: #fefefe;
-    margin: 20% auto;
+    margin: 200px auto;
     padding: 0;
     width: 50%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -640,7 +640,7 @@ input[type="color"]:focus {
 }
 
 .modal-body {
-    padding: 25px;
+    padding-bottom: 25px;
     display: flex;
     flex-flow: column;
     justify-content: center;
@@ -649,4 +649,47 @@ input[type="color"]:focus {
 
 .modal-body p {
     margin: 0;
+    margin-top: 30px;
+}
+
+.tooltip {
+    position: absolute;
+    top: -25px;
+    left: -14px;
+    padding: 8px 13px;
+    color: #FF4655;
+    background-color: #000;
+    border-radius: 3px;
+    visibility: hidden;
+    opacity: 0;
+    transition: all .3s;
+}
+
+.tooltip.export-tooltip {
+    left: 22px;
+    top: -40px;
+}
+
+.show {
+    visibility: visible;
+    opacity: 1;
+    top: -45px;
+}
+
+.preview-picker {
+    display: flex;
+    width: 100%;
+    padding: 30px;
+    background: #e8e8e8;
+    flex: 1 1;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+#canvas-preview-picker {
+    max-height: 100%;
+    height: 200px;
+    object-fit: contain;
+    filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, .2));
 }

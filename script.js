@@ -15,11 +15,14 @@ let code = String.raw`
         variance: settingsVariance,
         cellSize: settingsCellsize,
         colorFunction: settingsColorFunction,
+        fill: true,
+        strokeWidth: 1
     });
-    document.body.appendChild(pattern.canvas())
+    document.body.appendChild(pattern.toCanvas())
 <script>`
 
-var patternPreview,
+var settings,
+    patternPreview,
     colorFunction = '',
     xColors = [];
 
@@ -38,7 +41,7 @@ function updateCanvas() {
     xColors = [];
     $('.palette-selected > div').each(function () { xColors.push(hexc($(this).css('backgroundColor'))); });
 
-    var settings = {
+    settings = {
         height: canvasHeight > 4320 ? 4320 : canvasHeight,
         width: canvasWidth > 7680 ? 7680 : canvasWidth,
         xColors: xColors,
@@ -141,13 +144,23 @@ function copyToClipboard(element) {
     $temp.val($(element).text()).select();
     document.execCommand("copy");
     $temp.remove();
+    $('.js-copy .tooltip').toggleClass('show');
+    setTimeout(function () {
+        $('.js-copy .tooltip').toggleClass('show');
+    }, 1000);
 }
+
+
 
 /*============ EXPORT ============*/
 $('.preview__export-btn').click(function (e) {
     e.preventDefault();
     saveCanvasToPng(patternPreview);
     // downloadPng(pattern.png());
+    $('.preview__export-btn .tooltip').toggleClass('show');
+    setTimeout(function () {
+        $('.preview__export-btn .tooltip').toggleClass('show');
+    }, 1000);
 });
 
 function downloadPng(base64string) {
@@ -191,7 +204,7 @@ var waveBtn = (function () {
             this.appendChild(newRound);
 
             x = e.pageX - this.offsetLeft;
-            y = e.pageY - this.offsetTop - 60;
+            y = e.pageY - this.offsetTop - 60 + $('.sidebar').scrollTop();
 
             newRound.style.left = x + "px";
             newRound.style.top = y + "px";
@@ -279,6 +292,7 @@ $('.js-random-color').click(function () {
 $('.js-add-color').click(function () {
     $('.container, header').toggleClass('blur');
     $('.modal').show();
+    updatePreviewPicker();
 });
 
 function hideModal() {
@@ -296,12 +310,13 @@ $(window).click(function (event) {
     }
 });
 
+
 /* init */
-$('.color-picker-wrapper').each(function() {
-    $(this).css({'background-color': 'rgb(' + hexToRgb($(this).children().val()) + ')'});
+$('.color-picker-wrapper').each(function () {
+    $(this).css({ 'background-color': 'rgb(' + hexToRgb($(this).children().val()) + ')' });
 });
-$('.palette-picker-list').on('change', '.palette-picker-swatch', function() {
-	$(this).parent().css({'background-color': 'rgb(' + hexToRgb($(this).val()) + ')'});    
+$('.palette-picker-list').on('change', '.palette-picker-swatch', function () {
+    $(this).parent().css({ 'background-color': 'rgb(' + hexToRgb($(this).val()) + ')' });
 });
 
 
@@ -322,7 +337,7 @@ $('.js-minus').click(function () {
 
 $('.js-save-palette').click(function () {
     let palette = $('<div class="palette"></div>')
-    $('.palette-picker-list .palette-picker-swatch').each(function(index, value) {
+    $('.palette-picker-list .palette-picker-swatch').each(function (index, value) {
         palette.append($('<div class="palette-swatch" style="background: rgb(' + hexToRgb($(this).val()) + ')"></div>'))
     })
     $('.custom .palette-list').append(palette);
@@ -333,5 +348,21 @@ $('.js-save-palette').click(function () {
 });
 
 
+updatePreviewPicker = () => {
+    previewColors = [];
+    $('.palette-picker-list .palette-picker-swatch').each(function () { previewColors.push($(this).val()); });
+    settings['xColors'] = previewColors;
+
+    let pattern = trianglify(settings);
+    let preview = document.getElementById('canvas-preview-picker');
+    pattern.toCanvas(preview);
+}
+
+
+$('.palette-picker').on('click change', '.js-minus, .js-plus, .palette-picker-swatch', function () {
+    updatePreviewPicker();
+});
+
 /*============ UPDATE ============*/
 updateCanvas();
+updatePreviewPicker();

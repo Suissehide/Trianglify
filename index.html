@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" href="favicon.png" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"
         type="text/css">
     <link href="./prism.css" rel="stylesheet" type="text/css">
@@ -16,7 +17,7 @@
     <header>
         <nav class="navbar">
             <div class="navbar__title">Trianglify</div>
-            <div>by <a href="https://github.com/Suissehide">Suissehide</a></div>
+            <div>by <a href="https://github.com/Suissehide/Trianglify">Suissehide</a></div>
         </nav>
     </header>
     <div class="container">
@@ -92,19 +93,21 @@
                         <code id="code"></code>
                     </pre>
                     <div class="center">
-                        <button onclick="copyToClipboard('#code')" class="btn">
+                        <button onclick="copyToClipboard('#code')" class="btn js-copy">
                             <i class="far fa-copy alone"></i>
+                            <div class="tooltip">COPIED!</div>
                         </button>
                     </div>
                 </div>
             </div>
             <div class="preview">
                 <div class="preview__content">
-                    <canvas id="canvas-preview" height="900" width="1440"></canvas>
+                    <canvas id="canvas-preview" height="1080" width="1920"></canvas>
                     <div class="preview__export">
                         <button class="btn preview__export-btn">
                             <i class="fas fa-file-download"></i>
                             EXPORT
+                            <div class="tooltip export-tooltip">DONE!</div>
                         </button>
                     </div>
                 </div>
@@ -120,6 +123,9 @@
                 <h2>New palette</h2>
             </div>
             <div class="modal-body">
+                <div class="preview-picker">
+                    <canvas id="canvas-preview-picker"></canvas>
+                </div>
                 <p>Click to edit colors</p>
                 <div class="palette-picker">
                     <div class="palette-picker-list">
@@ -132,7 +138,9 @@
                     <button class="palette-picker-btn btn-plus js-plus"><i class="fas fa-plus"></i></button>
                     <button class="palette-picker-btn btn-minus js-minus"><i class="fas fa-minus"></i></button>
                 </div>
-                <button class="btn btn-small js-save-palette">SAVE PALETTE</button>
+                <button class="btn btn-small js-save-palette">
+                    SAVE PALETTE
+                </button>
             </div>
         </div>
     </div>
