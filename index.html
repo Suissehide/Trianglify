@@ -1,112 +1,149 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link  href="./style.css" rel="stylesheet" type="text/css">
-        <title>Trianglify</title>
-    </head>
 
-    <body>
-        <header>
-            <nav class="navbar">
-                <div class="navbar__title">Trianglify</div>
-                <div>by <a href="https://github.com/Suissehide">Suissehide</a></div>
-            </nav>
-        </header>
-        <div class="container">
-            <div class="content">
-                <div class="sidebar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"
+        type="text/css">
+    <link href="./prism.css" rel="stylesheet" type="text/css">
+    <link href="./style.css" rel="stylesheet" type="text/css">
+    <title>Trianglify</title>
+</head>
 
-                </div>
-                <div class="preview">
-                    <div class="preview__content">
-                        <canvas id="canvas-preview" height="900" width="1440"></canvas>
-                        <div class="preview__export">
-                            <button class="preview__export-btn">
-                                <i class="fas fa-export"></i>
-                                EXPORT
-                            </button>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar__title">Trianglify</div>
+            <div>by <a href="https://github.com/Suissehide">Suissehide</a></div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="content">
+            <div class="sidebar">
+                <div class="sidebar__title">Settings</div>
+                <div class="row">
+                    <div class="col col-2">
+                        <div class="form-input">
+                            <label>HEIGHT</label>
+                            <input value="1080" type="text" id="settings_height" name="settings[height]"
+                                class="input" />
                         </div>
+                    </div>
+                    <div class="col col-2">
+                        <div class="form-input">
+                            <label>WIDTH</label>
+                            <input value="1920" type="text" id="settings_width" name="settings[width]" class="input" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting__pattern form-input">
+                    <label>COLOR PATTERN</label>
+                    <ul class="tab-bar js-pattern" tab-num="3">
+                        <li data-num="gradient" class="tab wave dark select">GRADIENT</li>
+                        <li data-num="sparkle" class="tab wave dark">SPARKLE</li>
+                        <li data-num="shadows" class="tab wave dark">SHADOWS</li>
+                        <div class="indicator"></div>
+                    </ul>
+                </div>
+
+                <div class="form-input form-range">
+                    <label>PATTERN INTENSITY</label>
+                    <input type="range" min="0" max="2" step=".01" value=".5" id="settings_intensity"
+                        name="settings[intensity]" class="rs-range" />
+                </div>
+                <div class="form-input form-range">
+                    <label>TRIANGLE VARIANCE</label>
+                    <input type="range" min="0" max="2" step=".01" value=".5" id="settings_variance"
+                        name="settings[variance]" class="rs-range" />
+                </div>
+                <div class="form-input form-range">
+                    <label>CELL SIZE</label>
+                    <input type="range" min="75" max="400" step="1" value="175" id="settings_cellsize"
+                        name="settings[cellsize]" class="rs-range" />
+                </div>
+                <div class="center">
+                    <button id="randomize" class="btn">RANDOMIZE</button>
+                </div>
+
+                <div class="setting__palette">
+                    <div class="setting__title">PALETTE</div>
+                    <ul class="tab-bar js-palette" tab-num="2">
+                        <li data-num="default" class="tab wave dark">DEFAULT</li>
+                        <li data-num="custom" class="tab wave dark">CUSTOM</li>
+                        <div class="indicator"></div>
+                    </ul>
+                    <div class="palette-tab default">
+                        <button class="btn btn-fullwidth js-random-color"><i class="fas fa-random alone"></i></button>
+                        <div class="palette-list"></div>
+                    </div>
+
+                    <div class="palette-tab custom">
+                        <button class="btn btn-fullwidth js-add-color"><i class="fas fa-plus alone"></i></button>
+                        <div class="palette-list"></div>
+                    </div>
+                </div>
+
+                <div class="setting__code">
+                    <div class="setting__title">CODE</div>
+                    <pre class="language-javascript">
+                        <code id="code"></code>
+                    </pre>
+                    <div class="center">
+                        <button onclick="copyToClipboard('#code')" class="btn">
+                            <i class="far fa-copy alone"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="preview">
+                <div class="preview__content">
+                    <canvas id="canvas-preview" height="900" width="1440"></canvas>
+                    <div class="preview__export">
+                        <button class="btn preview__export-btn">
+                            <i class="fas fa-file-download"></i>
+                            EXPORT
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+
+    <div class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-close">&times;</span>
+                <h2>New palette</h2>
+            </div>
+            <div class="modal-body">
+                <p>Click to edit colors</p>
+                <div class="palette-picker">
+                    <div class="palette-picker-list">
+                        <div class="color-picker-wrapper"><input class="palette-picker-swatch" type="color" value="#FFA372"></div>
+                        <div class="color-picker-wrapper"><input class="palette-picker-swatch" type="color" value="#ED6663"></div>
+                        <div class="color-picker-wrapper"><input class="palette-picker-swatch" type="color" value="#B52B65"></div>
+                        <div class="color-picker-wrapper"><input class="palette-picker-swatch" type="color" value="#621055"></div>
+                        <div class="color-picker-wrapper"><input class="palette-picker-swatch" type="color" value="#120310"></div>
+                    </div>
+                    <button class="palette-picker-btn btn-plus js-plus"><i class="fas fa-plus"></i></button>
+                    <button class="palette-picker-btn btn-minus js-minus"><i class="fas fa-minus"></i></button>
+                </div>
+                <button class="btn btn-small js-save-palette">SAVE PALETTE</button>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>
 
-<script
-  src="https://code.jquery.com/jquery-3.5.1.min.js"
-  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-  crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/2.0.0/trianglify.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src='https://unpkg.com/trianglify@^4/dist/trianglify.bundle.js'></script>
 
-<script>
-    let canvasWidth = 1920; //window.innerWidth
-    let canvasHeight = 1080; //window.innerHeight
-
-    // var pattern = Trianglify({
-    //     height: canvasHeight,
-    //     width: canvasWidth,
-    //     x_colors: ['#F3EEDB', '#99CC33', '#FCCD2D'],
-    //     y_colors: ['#F8B72A', '#3D2314'],
-    //     // cell_size: Math.ceil(window.innerWidth / 8),
-    //     color_space: 'lab',
-    //     stroke_width: 1.51,
-    //     cell_size: 75,
-    //     // variance: 0.75,
-    //     // seed: null,
-    // })
-
-    var pattern = Trianglify({
-        width: canvasWidth,
-        height: canvasHeight,
-        x_colors: "random",
-        variance: .5,
-        cell_size: 150,
-        stroke_width: 1.51,
-        seed: null
-	});
-
-    var preview = document.getElementById('canvas-preview')
-    var patternPreview = pattern.canvas(preview);
-    
-    //fix anti aliasing
-    var context = patternPreview.getContext("2d");
-    context.save();
-    context.drawImage(patternPreview, 0, 0);
-    context.restore();
-
-    $('.preview__export-btn').click(function(e) {
-        e.preventDefault();
-
-        saveCanvasToPng(patternPreview);
-        // downloadPng(pattern.png());
-    });
-
-    function downloadPng(base64string) {
-        const pageImage = new Image();
-        pageImage.src = base64string;
-        pageImage.onload = function() {
-            const canvas = document.createElement('canvas');
-            canvas.width = pageImage.naturalWidth;
-            canvas.height= pageImage.naturalHeight;
-
-            const ctx = canvas.getContext('2d');
-            ctx.imageSmoothingEnabled = false;
-            ctx.drawImage(pageImage, 0, 0);
-            saveCanvasToPng(canvas);
-        }
-    }
-
-    function saveCanvasToPng(canvas) {
-        let fileName = "image";
-        const link = document.createElement('a');
-        link.download = fileName + '.png';
-        canvas.toBlob(function(blob) {
-            link.href = URL.createObjectURL(blob);
-            link.click();
-        });
-    }
-</script>
+<script src='colorbrewer.js'></script>
+<script src="prism.js"></script>
+<script src="script.js"></script>
