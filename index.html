@@ -1,19 +1,39 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169370819-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-169370819-1');
+    </script>
+
     <link rel="icon" type="image/png" href="favicon.png" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"
         type="text/css">
-    <link href="./prism.css" rel="stylesheet" type="text/css">
-    <link href="./style.css" rel="stylesheet" type="text/css">
-    <title>Trianglify</title>
+    <link href="./css/prism.css" rel="stylesheet" type="text/css">
+    <link href="./css/style.css" rel="stylesheet" type="text/css">
+
+    <title>Trianglify · Low Poly Pattern Generator</title>
+
+    <meta name="description" content="Trianglify is a tool for generating low poly triangle patterns that can be used as wallpapers and website assets.">
+    <meta property="og:url" content="https://trianglify.qwetle.fr">
+    <meta property="og:title" content="Trianglify · Low Poly Pattern Generator">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="Create colorful low poly triangle patterns that can be used as wallpapers and website assets.">
 </head>
 
 <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
     <header>
         <nav class="navbar">
             <div class="navbar__title">Trianglify</div>
@@ -152,6 +172,6 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script src='https://unpkg.com/trianglify@^4/dist/trianglify.bundle.js'></script>
 
-<script src='colorbrewer.js'></script>
-<script src="prism.js"></script>
-<script src="script.js"></script>
+<script src='./js/colorbrewer.js'></script>
+<script src="./js/prism.js"></script>
+<script src="js/script.js"></script>
