@@ -2,3 +2,5 @@
 
 # Trianglify
 Free trianglify background generator
+
+[Visit the website](https://trianglify.qwetle.fr/ "Trianglify")
