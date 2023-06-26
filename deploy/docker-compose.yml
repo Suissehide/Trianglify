@@ -1,0 +1,17 @@
+services:
+
+  autoindex:
+    container_name: trianglify
+    image: dceoy/nginx-autoindex:latest
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - $USERDIR:/home/server/website/Tranglify:ro # Location you want to index
+    labels:
+      - "traefik.enable=true"
+      ## HTTP Routers
+      - "traefik.http.routers.trianglify-rtr.entrypoints=https"
+      - "traefik.http.routers.trianglify-rtr.rule=Host(`trianglify.$DOMAIN_NAME`)"
+      ## HTTP Services
+      - "traefik.http.routers.trianglify-rtr.service=trianglify-svc"
+      - "traefik.http.services.trianglify-svc.loadbalancer.server.port=80"

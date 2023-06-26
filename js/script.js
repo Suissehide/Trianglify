@@ -305,7 +305,7 @@ $('.modal-close').click(function () {
 });
 
 $(window).click(function (event) {
-    if (event.target == $('.modal')[0]) {
+    if (event.target === $('.modal')[0]) {
         hideModal();
     }
 });
@@ -330,7 +330,7 @@ $('.js-minus').click(function () {
     let n = $('.palette-picker-list .color-picker-wrapper').length;
     if (n > 2)
         $('.palette-picker-list .color-picker-wrapper').last().remove()
-    if (n == 3)
+    if (n === 3)
         $('.js-minus').hide();
 });
 

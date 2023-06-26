@@ -257,7 +257,7 @@ input[type="range"]::-moz-focus-outer {
     background: transparent;
     text-align: center;
     box-sizing: border-box;
-    left: 0px;
+    left: 0;
     color: #333;
     font-size: 16px;
     margin-top: 17px;
@@ -399,7 +399,6 @@ input[type="color"]:focus {
     overflow: hidden;
     text-align: center;
     -webkit-box-flex: 1;
-    -ms-flex-positive: 1;
     flex-grow: 1;
     cursor: pointer;
     position: relative;
@@ -408,7 +407,7 @@ input[type="color"]:focus {
 }
 
 .indicator {
-    width: 0px;
+    width: 0;
     height: 3px;
     background: #2196F3;
     position: absolute;
@@ -418,8 +417,8 @@ input[type="color"]:focus {
 }
 
 .cercle {
-    width: 0px;
-    height: 0px;
+    width: 0;
+    height: 0;
     position: absolute;
 }
 
@@ -648,8 +647,7 @@ input[type="color"]:focus {
 }
 
 .modal-body p {
-    margin: 0;
-    margin-top: 30px;
+    margin: 30px 0 0;
 }
 
 .tooltip {
