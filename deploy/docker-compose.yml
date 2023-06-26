@@ -10,7 +10,7 @@ services:
     restart: unless-stopped
     network_mode: bridge
     volumes:
-      - $USERDIR/website/Trianglify/src:/var/lib/nginx/html:ro
+      - $USERDIR/projects/Trianglify/src:/var/lib/nginx/html:ro
     entrypoint:
       - /usr/sbin/nginx
     command:
