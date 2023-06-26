@@ -1,12 +1,21 @@
-services:
+version: '3'
 
-  autoindex:
+services:
+  trianglify:
     container_name: trianglify
+    build:
+      context: .
+      dockerfile: ./app/Dockerfile
     image: dceoy/nginx-autoindex:latest
     restart: unless-stopped
     network_mode: bridge
     volumes:
-      - $USERDIR:/home/server/website/Tranglify:ro # Location you want to index
+      - $USERDIR/website/Trianglify/src:/var/lib/nginx/html:ro
+    entrypoint:
+      - /usr/sbin/nginx
+    command:
+      - -g
+      - daemon off;
     labels:
       - "traefik.enable=true"
       ## HTTP Routers
