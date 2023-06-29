@@ -6,16 +6,10 @@ services:
     build:
       context: .
       dockerfile: ./app/Dockerfile
-    image: dceoy/nginx-autoindex:latest
     restart: unless-stopped
     network_mode: bridge
     volumes:
-      - $USERDIR/projects/Trianglify/src:/var/lib/nginx/html:ro
-    entrypoint:
-      - /usr/sbin/nginx
-    command:
-      - -g
-      - daemon off;
+      - $USERDIR/projects/Trianglify/src:/usr/share/nginx/html:ro
     labels:
       - "traefik.enable=true"
       ## HTTP Routers
