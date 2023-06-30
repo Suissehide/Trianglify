@@ -10,11 +10,18 @@ services:
     network_mode: bridge
     volumes:
       - $USERDIR/projects/Trianglify/src:/usr/share/nginx/html:ro
+      - $DOCKERDIR/appdata/traefik/rules:/rules
     labels:
       - "traefik.enable=true"
       ## HTTP Routers
+      - "traefik.http.routers.trianglify-http.entrypoints=http"
+      - "traefik.http.routers.trianglify-http.rule=Host(`trianglify.$DOMAIN_NAME`)"
+
       - "traefik.http.routers.trianglify-rtr.entrypoints=https"
       - "traefik.http.routers.trianglify-rtr.rule=Host(`trianglify.$DOMAIN_NAME`)"
+      ## Middlewares
+      - "traefik.http.routers.trianglify-http.middlewares=chain-no-auth@file"
+      - "traefik.http.routers.trianglify-rtr.middlewares=chain-no-auth@file"
       ## HTTP Services
       - "traefik.http.routers.trianglify-rtr.service=trianglify-svc"
       - "traefik.http.services.trianglify-svc.loadbalancer.server.port=80"
